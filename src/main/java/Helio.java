@@ -1,11 +1,12 @@
 import java.util.Scanner;
-import java.util.List;
 
 public class Helio {
     public static void main(String[] args) {
-        String logo = "        ╱|、\n" +
-                "       (˚ˎ 。7  \n" +
-                "        |、˜〵          \n" +
+        String[] userList = new String[100];
+        int count = 0;
+        String logo = "        ╱|\n" +
+                "       (˚ˎ 。7\n" +
+                "        |、˜〵\n" +
                 "       じしˍ,)ノ\n";
         System.out.println("____________________________________________________________\n" +
                 "Hello... I'm Helio o.o\n" +
@@ -21,11 +22,17 @@ public class Helio {
                         "Bye. Hope to see you again soon!\n" +
                         "____________________________________________________________\n");
                 break;
-            }
-            else {
+            } else if (input.equals("list")) {
+                for (String element : userList) {
+                    if (element != null) {
+                        System.out.println(element);
+                    }
+                }
+            } else {
+                userList[count] = count + 1 + ". " + input;
+                count++;
                 System.out.println("____________________________________________________________\n" +
-                        input +
-                        "\n" +
+                        "added: " + input + "\n" +
                         "____________________________________________________________\n");
             }
 
