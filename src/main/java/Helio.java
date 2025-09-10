@@ -8,12 +8,8 @@ public class Helio {
                 "       (˚ˎ 。7\n" +
                 "        |、˜〵\n" +
                 "       じしˍ,)ノ\n";
-        System.out.println("____________________________________________________________\n" +
-                " Hello... I'm Helio o.o\n" +
-                logo +
-                " What can I do for you? ._.\n" +
-                "____________________________________________________________");
 
+        Message.greet(logo);
         Scanner in = new Scanner(System.in);
         while (in.hasNextLine()) {
             String input = in.nextLine();
@@ -24,111 +20,82 @@ public class Helio {
             if (input.isEmpty()) {
                 continue;
             }
-            System.out.println(" Command entered: " + input);
+            Message.showEntered(input);
             if (input.equals("bye")) {
-                System.out.println("____________________________________________________________\n" +
-                        " Bye. Hope to see you again soon!\n" +
-                        "____________________________________________________________");
+                Message.bye();
                 break;
             } else if (input.equals("help")) {
-                System.out.println("____________________________________________________________\n" +
-                        " List of valid inputs:\n" +
-                        " 1. list (view current list of tasks)\n" +
-                        " 2. mark <task number> (mark a task as done)\n" +
-                        " 3. unmark <task number> (mark a task as not done)\n" +
-                        " 4. todo <task description> (add a task without any date/time attached to it to the list)\n" +
-                        " 5. deadline <task description> /by <deadline> (add a task that need to be done before a specific date/time to the list)\n" +
-                        " 6. event <task description> /from <date/time> /to <date/time> (add a task that starts at a specific date/time and ends at a specific date/time to the list)\n" +
-                        " 7. help (shows list of valid commands)\n" +
-                        " 8. bye (exits program)\n" +
-                        "____________________________________________________________");
+                Message.help();
             } else if (input.equals("list")) {
-                System.out.println("____________________________________________________________");
                 if (count == 0) {
-                    System.out.println(" Nothing for meow ^.^");
+                    Message.emptyList();
                 } else {
-                    System.out.println(" Here are the tasks in your list:");
+                    Message.listHeader();
                     for (int i = 0; i < count; i++) {
                         System.out.println((i + 1) + ". " + userList[i]);
                     }
+                    Message.listFooter();
                 }
-                System.out.println("____________________________________________________________");
             } else if (input.startsWith("mark ")) {
-                String check = (input.substring(5));
+                String check = input.substring(5).trim();
                 if (check.isEmpty()) {
-                    System.out.println("____________________________________________________________");
-                    System.out.println(" Meow! Please enter a task number!! ");
-                    System.out.println("____________________________________________________________");
+                    Handle.missingTaskNumber();
                     continue;
                 }
-                int taskNum = Integer.parseInt(input.split(" ")[1]);
+                int taskNum;
+                try {
+                    taskNum = Integer.parseInt(check.split("\\s+")[0]);
+                } catch (NumberFormatException e) {
+                    Handle.invalidTaskNumber();
+                    continue;
+                }
                 if (taskNum <= 0 || taskNum > count) {
-                    System.out.println("____________________________________________________________");
-                    System.out.println(" Meow! Invalid task number!");
-                    System.out.println("____________________________________________________________");
+                    Handle.invalidTaskNumber();
                     continue;
                 }
                 userList[taskNum - 1].markAsDone();
-                System.out.println("____________________________________________________________");
-                System.out.println(" Nice! I've marked this task as done:");
-                System.out.println(" " + userList[taskNum - 1]);
-                System.out.println("____________________________________________________________");
+                Message.markedDone(userList[taskNum - 1].toString());
             } else if (input.startsWith("unmark ")) {
-                String check = (input.substring(7));
+                String check = input.substring(7).trim();
                 if (check.isEmpty()) {
-                    System.out.println("____________________________________________________________");
-                    System.out.println(" Meow! Please enter a task number!! ");
-                    System.out.println("____________________________________________________________");
+                    Handle.missingTaskNumber();
                     continue;
                 }
-                int taskNum = Integer.parseInt(input.split(" ")[1]);
+                int taskNum;
+                try {
+                    taskNum = Integer.parseInt(check.split("\\s+")[0]);
+                } catch (NumberFormatException e) {
+                    Handle.invalidTaskNumber();
+                    continue;
+                }
                 if (taskNum <= 0 || taskNum > count) {
-                    System.out.println("____________________________________________________________");
-                    System.out.println(" Meow! Invalid task number!");
-                    System.out.println("____________________________________________________________");
+                    Handle.invalidTaskNumber();
                     continue;
                 }
                 userList[taskNum - 1].markAsNotDone();
-                System.out.println("____________________________________________________________");
-                System.out.println(" OK, I've marked this task as not done yet:");
-                System.out.println(" " + userList[taskNum - 1]);
-                System.out.println("____________________________________________________________");
+                Message.markedUndone(userList[taskNum - 1].toString());
             } else if (input.startsWith("todo ")) {
                 String description = (input.substring(5));
                 if (description.isEmpty()) {
-                    System.out.println("____________________________________________________________");
-                    System.out.println(" Meow! Description of todo cannot be empty! =.=");
-                    System.out.println("____________________________________________________________");
+                    Handle.emptyTodoDescription();
                     continue;
                 }
                 userList[count] = new Todo(description);
                 count++;
-                System.out.println("____________________________________________________________");
-                System.out.println(" Got it. I've added this task:");
-                System.out.println("   " + userList[count - 1]);
-                System.out.println(" Now you have " + count + " tasks in the list.");
-                System.out.println("____________________________________________________________");
+                Message.addedTask(userList[count - 1].toString(), count);
             } else if (input.startsWith("deadline ")) {
                 String[] sections = input.substring(9).split(" /by ");
                 if (sections[0].isEmpty() || sections[1].isEmpty()) {
-                    System.out.println("____________________________________________________________");
-                    System.out.println(" Meow! Please fill in a description and a date/time! =.=");
-                    System.out.println("____________________________________________________________");
+                    Handle.emptyDeadlineParts();
                     continue;
                 }
                 userList[count] = new Deadline(sections[0], sections[1]);
                 count++;
-                System.out.println("____________________________________________________________");
-                System.out.println(" Got it. I've added this task:");
-                System.out.println("   " + userList[count - 1]);
-                System.out.println(" Now you have " + count + " tasks in the list.");
-                System.out.println("____________________________________________________________");
+                Message.addedTask(userList[count - 1].toString(), count);
             } else if (input.startsWith("event ")) {
                 String[] sections = input.substring(6).split(" /from | /to ");
                 if (sections[0].isEmpty() || sections[1].isEmpty() || sections[2].isEmpty()) {
-                    System.out.println("____________________________________________________________");
-                    System.out.println(" Meow! Please fill in a description and date/time of start and end! =.=");
-                    System.out.println("____________________________________________________________");
+                    Handle.emptyEventParts();
                     continue;
                 }
                 String description = sections[0];
@@ -136,15 +103,9 @@ public class Helio {
                 String to = sections[2];
                 userList[count] = new Event(description, from, to);
                 count++;
-                System.out.println("____________________________________________________________");
-                System.out.println(" Got it. I've added this task:");
-                System.out.println("   " + userList[count - 1]);
-                System.out.println(" Now you have " + count + " tasks in the list.");
-                System.out.println("____________________________________________________________");
+                Message.addedTask(userList[count - 1].toString(), count);
             } else {
-                System.out.println("____________________________________________________________\n" +
-                        " Sorry, invalid input :< Please try again. See help for list of valid inputs!\n" +
-                        "____________________________________________________________");
+                Handle.invalidCommand();
             }
         }
     }
