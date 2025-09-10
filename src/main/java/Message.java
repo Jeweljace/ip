@@ -14,7 +14,7 @@ public final class Message {
 
     public static void bye() {
         System.out.println(LINE);
-        System.out.println(" Bye. Hope to see you again soon!");
+        System.out.println(" Bye bye! Time for my nap!! ");
         System.out.println(LINE);
     }
 
@@ -49,23 +49,23 @@ public final class Message {
 
     public static void markedDone(String task) {
         System.out.println(LINE);
-        System.out.println(" Nice! I've marked this task as done:");
+        System.out.println(" Nice! I've meowked this task as done:");
         System.out.println(" " + task);
         System.out.println(LINE);
     }
 
     public static void markedUndone(String task) {
         System.out.println(LINE);
-        System.out.println(" OK, I've marked this task as not done yet:");
+        System.out.println(" Aww okay... I've meowked this task as not done yet:");
         System.out.println(" " + task);
         System.out.println(LINE);
     }
 
     public static void addedTask(String task, int count) {
         System.out.println(LINE);
-        System.out.println(" Got it. I've added this task:");
+        System.out.println(" Got it!! I've added this task:");
         System.out.println("   " + task);
-        System.out.println(" Now you have " + count + " tasks in the list.");
+        System.out.println(" Now you have " + count + " tasks in your list.");
         System.out.println(LINE);
     }
 
