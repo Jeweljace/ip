@@ -49,14 +49,14 @@ public final class Message {
 
     public static void markedDone(String task) {
         System.out.println(LINE);
-        System.out.println(" Yay! I've meowked this task as done:");
+        System.out.println(" Yay! I've meowed this task as done:");
         System.out.println(" " + task);
         System.out.println(LINE);
     }
 
     public static void markedUndone(String task) {
         System.out.println(LINE);
-        System.out.println(" Aww okay... I've meowked this task as not done yet:");
+        System.out.println(" Aww okay... I've meowed this task as not done yet:");
         System.out.println(" " + task);
         System.out.println(LINE);
     }
