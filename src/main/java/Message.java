@@ -69,6 +69,14 @@ public final class Message {
         System.out.println(LINE);
     }
 
+    public static void removedTask(Task remTask, int listSize) {
+        System.out.println(LINE);
+        System.out.println(" Meow!! I've removed this task:");
+        System.out.println("   " + remTask);
+        System.out.println(" Now you have " + listSize + " tasks in the list:)");
+        System.out.println(LINE);
+    }
+
     public static void showEntered(String input) {
         System.out.println(" Command entered: " + input);
     }

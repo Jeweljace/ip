@@ -1,9 +1,10 @@
 import java.util.Scanner;
+import java.util.ArrayList;
 
 public class Helio {
     public static void main(String[] args) {
-        Task[] userList = new Task[100];
-        int count = 0;
+        ArrayList<Task> userList = new ArrayList<>();
+
         String logo = "        ╱|\n" +
                 "       (˚ˎ 。7\n" +
                 "        |、˜〵\n" +
@@ -11,6 +12,7 @@ public class Helio {
 
         Message.greet(logo);
         Scanner in = new Scanner(System.in);
+
         while (in.hasNextLine()) {
             String input = in.nextLine();
             if (input == null) {
@@ -27,12 +29,12 @@ public class Helio {
             } else if (input.equals("help")) {
                 Message.help();
             } else if (input.equals("list")) {
-                if (count == 0) {
+                if (userList.isEmpty()) {
                     Message.emptyList();
                 } else {
                     Message.listHeader();
-                    for (int i = 0; i < count; i++) {
-                        System.out.println((i + 1) + ". " + userList[i]);
+                    for (int i = 0; i < userList.size(); i++) {
+                        System.out.println((i + 1) + ". " + userList.get(i));
                     }
                     Message.listFooter();
                 }
@@ -49,12 +51,13 @@ public class Helio {
                     Handle.invalidTaskNumber();
                     continue;
                 }
-                if (taskNum <= 0 || taskNum > count) {
+                if (taskNum <= 0 || taskNum > userList.size()) {
                     Handle.invalidTaskNumber();
                     continue;
                 }
-                userList[taskNum - 1].markAsDone();
-                Message.markedDone(userList[taskNum - 1].toString());
+                Task t = userList.get(taskNum - 1);
+                t.markAsDone();
+                Message.markedDone(t.toString());
             } else if (input.startsWith("unmark ")) {
                 String check = input.substring(7).trim();
                 if (check.isEmpty()) {
@@ -68,42 +71,63 @@ public class Helio {
                     Handle.invalidTaskNumber();
                     continue;
                 }
-                if (taskNum <= 0 || taskNum > count) {
+                if (taskNum <= 0 || taskNum > userList.size()) {
                     Handle.invalidTaskNumber();
                     continue;
                 }
-                userList[taskNum - 1].markAsNotDone();
-                Message.markedUndone(userList[taskNum - 1].toString());
+                Task t = userList.get(taskNum - 1);
+                t.markAsNotDone();
+                Message.markedUndone(t.toString());
             } else if (input.startsWith("todo ")) {
                 String description = (input.substring(5));
                 if (description.isEmpty()) {
                     Handle.emptyTodoDescription();
                     continue;
                 }
-                userList[count] = new Todo(description);
-                count++;
-                Message.addedTask(userList[count - 1].toString(), count);
+                Task t = new Todo(description);
+                userList.add(t);
+                Message.addedTask(t.toString(), userList.size());
             } else if (input.startsWith("deadline ")) {
-                String[] sections = input.substring(9).split(" /by ");
-                if (sections[0].isEmpty() || sections[1].isEmpty()) {
+                String[] sections = input.substring(9).split(" /by ", 2);
+                if (sections.length < 2 || sections[0].isEmpty() || sections[1].isEmpty()) {
                     Handle.emptyDeadlineParts();
                     continue;
                 }
-                userList[count] = new Deadline(sections[0], sections[1]);
-                count++;
-                Message.addedTask(userList[count - 1].toString(), count);
+                Task t = new Deadline(sections[0], sections[1]);
+                userList.add(t);
+                Message.addedTask(t.toString(), userList.size());
             } else if (input.startsWith("event ")) {
-                String[] sections = input.substring(6).split(" /from | /to ");
-                if (sections[0].isEmpty() || sections[1].isEmpty() || sections[2].isEmpty()) {
+                String[] sections = input.substring(6).split(" /from | /to ", 3);
+                if (sections.length < 3 || sections[0].isEmpty() || sections[1].isEmpty() || sections[2].isEmpty()) {
                     Handle.emptyEventParts();
                     continue;
                 }
                 String description = sections[0];
                 String from = sections[1];
                 String to = sections[2];
-                userList[count] = new Event(description, from, to);
-                count++;
-                Message.addedTask(userList[count - 1].toString(), count);
+                Task t = new Event(description, from, to);
+                userList.add(t);
+                Message.addedTask(t.toString(), userList.size());
+            } else if (input.startsWith("delete ")) {
+                String check = input.substring(7).trim();
+                if (check.isEmpty()) {
+                    Handle.missingTaskNumber();
+                    continue;
+                }
+                int taskNum;
+                try {
+                    taskNum = Integer.parseInt(check.split("\\s+")[0]);
+                } catch (NumberFormatException e) {
+                    Handle.invalidTaskNumber();
+                    continue;
+                }
+                if (taskNum <= 0 || taskNum > userList.size()) {
+                    Handle.invalidTaskNumber();
+                    continue;
+                }
+                Task t = userList.get(taskNum - 1);
+                userList.remove(taskNum - 1);
+                Message.removedTask(t, userList.size());
             } else {
                 Handle.invalidCommand();
             }
