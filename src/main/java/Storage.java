@@ -1,16 +1,20 @@
 import java.io.File;
 import java.io.FileWriter;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Scanner;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 
 public class Storage {
-    private final Path path = Paths.get("data", "helio.txt");
+    private final Path path;
 
-    public int load(Task[] dest) {
+    public Storage(String dir, String fileName) {
+        this.path = Paths.get(dir, fileName);
+    }
+
+    public void load(ArrayList<Task> dest) {
         int count = 0;
         try {
             if (path.getParent() != null) {
@@ -18,21 +22,15 @@ public class Storage {
             }
             File file = path.toFile();
             if (!file.exists()) {
-                return 0;
+                return;
             }
-
             Scanner sc = new Scanner(file);
             while (sc.hasNextLine()) {
                 String line = sc.nextLine().trim();
                 if (line.isEmpty()) continue;
                 try {
                     Task t = parse(line);
-                    if (count < dest.length) {
-                        dest[count++] = t;
-                    } else {
-                        System.out.println("Warning: task array full; skipping remaining lines.");
-                        break;
-                    }
+                    dest.add(t);
                 } catch (Exception ex) {
                     System.out.println("Skipping corrupted line: " + line);
                 }
@@ -41,17 +39,16 @@ public class Storage {
         } catch (IOException ioe) {
             System.out.println("Load error: " + ioe.getMessage());
         }
-        return count;
     }
 
-    public void save(Task[] src, int count) {
+    public void save(ArrayList<Task> src) {
         try {
             if (path.getParent() != null) {
                 Files.createDirectories(path.getParent());
             }
             FileWriter fw = new FileWriter(path.toFile());
-            for (int i = 0; i < count; i++) {
-                fw.write(src[i].toSave());
+            for (Task t : src) {
+                fw.write(t.toSave());
                 fw.write(System.lineSeparator());
             }
             fw.close(); // important
