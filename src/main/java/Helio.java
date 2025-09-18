@@ -104,6 +104,7 @@ public class Helio {
                 Task t = new Deadline(sections[0], sections[1]);
                 userList.add(t);
                 Message.addedTask(t.toString(), userList.size());
+                storage.save(userList);
             } else if (input.startsWith("event ")) {
                 String[] sections = input.substring(6).split(" /from | /to ", 3);
                 if (sections.length < 3 || sections[0].isEmpty() || sections[1].isEmpty() || sections[2].isEmpty()) {
@@ -137,6 +138,7 @@ public class Helio {
                 Task t = userList.get(taskNum - 1);
                 userList.remove(taskNum - 1);
                 Message.removedTask(t, userList.size());
+                storage.save(userList);
             } else {
                 Handle.invalidCommand();
             }
