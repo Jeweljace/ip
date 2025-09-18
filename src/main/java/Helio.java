@@ -1,9 +1,15 @@
 import java.util.Scanner;
 
 public class Helio {
+    private static final String FILE_PATH_DIR = "data";
+    private static final String FILE_NAME = "helio.txt";
+
     public static void main(String[] args) {
         Task[] userList = new Task[100];
         int count = 0;
+        Storage storage = new Storage();
+        count = storage.load(userList);
+
         String logo = "        ╱|\n" +
                 "       (˚ˎ 。7\n" +
                 "        |、˜〵\n" +
@@ -55,6 +61,7 @@ public class Helio {
                 }
                 userList[taskNum - 1].markAsDone();
                 Message.markedDone(userList[taskNum - 1].toString());
+                storage.save(userList, count);
             } else if (input.startsWith("unmark ")) {
                 String check = input.substring(7).trim();
                 if (check.isEmpty()) {
@@ -74,6 +81,7 @@ public class Helio {
                 }
                 userList[taskNum - 1].markAsNotDone();
                 Message.markedUndone(userList[taskNum - 1].toString());
+                storage.save(userList, count);
             } else if (input.startsWith("todo ")) {
                 String description = (input.substring(5));
                 if (description.isEmpty()) {
@@ -83,6 +91,7 @@ public class Helio {
                 userList[count] = new Todo(description);
                 count++;
                 Message.addedTask(userList[count - 1].toString(), count);
+                storage.save(userList, count);
             } else if (input.startsWith("deadline ")) {
                 String[] sections = input.substring(9).split(" /by ");
                 if (sections[0].isEmpty() || sections[1].isEmpty()) {
@@ -92,6 +101,7 @@ public class Helio {
                 userList[count] = new Deadline(sections[0], sections[1]);
                 count++;
                 Message.addedTask(userList[count - 1].toString(), count);
+                storage.save(userList, count);
             } else if (input.startsWith("event ")) {
                 String[] sections = input.substring(6).split(" /from | /to ");
                 if (sections[0].isEmpty() || sections[1].isEmpty() || sections[2].isEmpty()) {
@@ -104,6 +114,7 @@ public class Helio {
                 userList[count] = new Event(description, from, to);
                 count++;
                 Message.addedTask(userList[count - 1].toString(), count);
+                storage.save(userList, count);
             } else {
                 Handle.invalidCommand();
             }
