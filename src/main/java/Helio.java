@@ -2,6 +2,9 @@ import java.util.Scanner;
 import java.util.ArrayList;
 
 public class Helio {
+    private static final String FILE_PATH_DIR = "data";
+    private static final String FILE_NAME = "helio.txt";
+
     public static void main(String[] args) {
         ArrayList<Task> userList = new ArrayList<>();
 
@@ -58,6 +61,7 @@ public class Helio {
                 Task t = userList.get(taskNum - 1);
                 t.markAsDone();
                 Message.markedDone(t.toString());
+                Storage.save(userList, count);
             } else if (input.startsWith("unmark ")) {
                 String check = input.substring(7).trim();
                 if (check.isEmpty()) {
@@ -78,6 +82,7 @@ public class Helio {
                 Task t = userList.get(taskNum - 1);
                 t.markAsNotDone();
                 Message.markedUndone(t.toString());
+                Storage.save(userList, count);
             } else if (input.startsWith("todo ")) {
                 String description = (input.substring(5));
                 if (description.isEmpty()) {
@@ -87,6 +92,7 @@ public class Helio {
                 Task t = new Todo(description);
                 userList.add(t);
                 Message.addedTask(t.toString(), userList.size());
+                Storage.save(userList, count);
             } else if (input.startsWith("deadline ")) {
                 String[] sections = input.substring(9).split(" /by ", 2);
                 if (sections.length < 2 || sections[0].isEmpty() || sections[1].isEmpty()) {
@@ -108,6 +114,7 @@ public class Helio {
                 Task t = new Event(description, from, to);
                 userList.add(t);
                 Message.addedTask(t.toString(), userList.size());
+                Storage.save(userList, count);
             } else if (input.startsWith("delete ")) {
                 String check = input.substring(7).trim();
                 if (check.isEmpty()) {
