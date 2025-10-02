@@ -1,5 +1,15 @@
+package helio;
+
 import java.util.Scanner;
 import java.util.ArrayList;
+
+import helio.storage.Storage;
+import helio.task.Task;
+import helio.task.Todo;
+import helio.task.Deadline;
+import helio.task.Event;
+import helio.ui.Message;
+import helio.ui.Handle;
 
 public class Helio {
     private static final String FILE_PATH_DIR = "data";

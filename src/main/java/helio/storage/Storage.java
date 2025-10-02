@@ -1,3 +1,5 @@
+package helio.storage;
+
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -6,6 +8,11 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+
+import helio.task.Task;
+import helio.task.Todo;
+import helio.task.Deadline;
+import helio.task.Event;
 
 public class Storage {
     private final Path path;
