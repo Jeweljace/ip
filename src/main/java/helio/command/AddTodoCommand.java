@@ -18,7 +18,7 @@ public class AddTodoCommand extends Command {
             ui.showError("The description of a todo cannot be empty.");
             return;
         }
-        var t = new Todo(description);
+        Todo t = new Todo(description);
         tasks.addTask(t);
         ui.showTaskAdded(t, tasks.size());
         storage.save(tasks);
