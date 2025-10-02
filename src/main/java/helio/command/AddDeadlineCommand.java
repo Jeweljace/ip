@@ -19,7 +19,7 @@ public class AddDeadlineCommand extends Command {
             ui.showError("Deadline must be: deadline <desc> /by <time>");
             return;
         }
-        var t = new Deadline(p[0], p[1]);
+        Deadline t = new Deadline(p[0], p[1]);
         tasks.addTask(t);
         ui.showTaskAdded(t, tasks.size());
         storage.save(tasks);
