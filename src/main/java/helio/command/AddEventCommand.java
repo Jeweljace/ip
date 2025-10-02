@@ -26,7 +26,7 @@ public class AddEventCommand extends Command {
             return;
         }
 
-        var t = new Event(first[0], second[0], second[1]);
+        Event t = new Event(first[0], second[0], second[1]);
         tasks.addTask(t);
         ui.showTaskAdded(t, tasks.size());
         storage.save(tasks);
