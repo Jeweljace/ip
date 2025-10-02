@@ -1,6 +1,7 @@
 package helio.ui;
 
 import java.util.Scanner;
+
 import helio.task.Task;
 import helio.task.TaskList;
 
@@ -12,21 +13,25 @@ public class Ui {
         return in.hasNextLine() ? in.nextLine() : null;
     }
 
-    public static void showWelcome(String logo) {
+    public void showWelcome() {
         System.out.println(LINE);
         System.out.println(" Hello... I'm Helio o.o");
-        System.out.println(logo);
+        System.out.println("        ╱|\n" +
+                "       (˚ˎ 。7\n" +
+                "        |、˜〵\n" +
+                "       じしˍ,)ノ\n");
         System.out.println(" What can I do for you? ._.");
+        System.out.println(" psssst if you don't know what I can do just enter the magic word --> help");
         System.out.println(LINE);
     }
 
-    public static void showBye() {
+    public void showBye() {
         System.out.println(LINE);
         System.out.println(" Bye bye! Time for my nap!! ");
         System.out.println(LINE);
     }
 
-    public static void showHelp() {
+    public void showHelp() {
         System.out.println(" List of valid inputs:");
         System.out.println("  - list");
         System.out.println("  - mark <task number>");
@@ -39,19 +44,19 @@ public class Ui {
         System.out.println("  - bye");
     }
 
-    public static void showLine() {
+    public void showLine() {
         System.out.println(LINE);
     }
 
-    public static void showError(String message) {
+    public void showError(String message) {
         System.out.println("Error: " + message);
     }
 
-    public static void showEntered(String input) {
+    public void showEntered(String input) {
         System.out.println(" Command entered: " + input);
     }
 
-    public static void showTasks(TaskList tasks) {
+    public void showTasks(TaskList tasks) {
         if (tasks.isEmpty()) {
             System.out.println(" Nothing for meow ^.^");
             return;
@@ -62,24 +67,24 @@ public class Ui {
         }
     }
 
-    public static void showTaskAdded(Task t, int count) {
+    public void showTaskAdded(Task t, int count) {
         System.out.println(" Got it!! I've added this task:");
         System.out.println("   " + t);
         System.out.println(" Now you have " + count + " tasks in your list.");
     }
 
-    public static void showTaskRemoved(Task t, int count) {
+    public void showTaskRemoved(Task t, int count) {
         System.out.println(" Meow!! I've removed this task:");
         System.out.println("   " + t);
         System.out.println(" Now you have " + count + " tasks in the list:)");
     }
 
-    public static void showMarked(Task t) {
+    public void showMarked(Task t) {
         System.out.println(" Yay! I've meowed this task as done:");
         System.out.println(" " + t);
     }
 
-    public static void showUnmarked(Task t) {
+    public void showUnmarked(Task t) {
         System.out.println(" Aww okay... I've meowed this task as not done yet:");
         System.out.println(" " + t);
     }
