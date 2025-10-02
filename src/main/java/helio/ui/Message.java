@@ -1,3 +1,7 @@
+package helio.ui;
+
+import helio.task.Task;
+
 public final class Message {
     private Message() {
     }
