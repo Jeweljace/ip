@@ -23,6 +23,7 @@ public class Helio {
      * @param fileDir  directory where the save file is stored
      * @param fileName name of the save file
      */
+    @SuppressWarnings("JavadocReference")
     public Helio(String dir, String fileName) {
         this.ui = new Ui();
         this.storage = new Storage(dir, fileName);
