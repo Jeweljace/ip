@@ -30,10 +30,9 @@ public class Ui {
     public void showWelcome() {
         System.out.println(LINE);
         System.out.println(" Hello... I'm Helio o.o");
-        System.out.println("        ╱|\n" +
-                "       (˚ˎ 。7\n" +
-                "        |、˜〵\n" +
-                "       じしˍ,)ノ\n");
+        System.out.println("  /\\_/\\\n"
+                + " ( o.o )\n"
+                + "  > ^ <\n");
         System.out.println(" What can I do for you? ._.");
         System.out.println(" psssst if you don't know what I can do just enter the magic word --> help");
         System.out.println(LINE);
