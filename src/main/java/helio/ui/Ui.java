@@ -37,9 +37,12 @@ public class Ui {
         System.out.println("  - mark <task number>");
         System.out.println("  - unmark <task number>");
         System.out.println("  - todo <description>");
-        System.out.println("  - deadline <description> /by <deadline>");
-        System.out.println("  - event <description> /from <start> /to <end>");
+        System.out.println("  - deadline <description> /by <yyyy-MM-dd> <optional: HHmm>");
+        System.out.println("  - event <description> " +
+                "/from <yyyy-MM-dd> <optional: HHmm> /to <yyyy-MM-dd> <optional: HHmm>");
         System.out.println("  - delete <task number>");
+        System.out.println("  - find <keyword>");
+        System.out.println("  - on <yyyy-MM-dd>");
         System.out.println("  - help");
         System.out.println("  - bye");
     }
@@ -62,6 +65,18 @@ public class Ui {
             return;
         }
         System.out.println(" Here are the tasks in your list:");
+        for (int i = 0; i < tasks.size(); i++) {
+            System.out.println((i + 1) + ". " + tasks.getTask(i));
+        }
+    }
+
+    public void showMatchingTasks(TaskList tasks) {
+        if (tasks.isEmpty()) {
+            System.out.println(" No matching tasks found!!");
+            return;
+        }
+        System.out.println(" Searching for matching tasks... >.<");
+        System.out.println(" Here are the tasks in your list that match your keyword:");
         for (int i = 0; i < tasks.size(); i++) {
             System.out.println((i + 1) + ". " + tasks.getTask(i));
         }
