@@ -30,6 +30,8 @@ public class Parser {
             return new DeleteCommand(args);
         case "on":
             return new OnDateCommand(args);
+        case "find":
+            return new FindCommand(args);
         default:
             return new UnknownCommand(cmd);
         }

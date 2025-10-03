@@ -29,4 +29,15 @@ public class TaskList {
     public ArrayList<Task> getAll() {
         return tasks;
     }
+
+    public TaskList findContaining(String keyword) {
+        String k = keyword.toLowerCase();
+        TaskList result = new TaskList();
+        for (Task t : tasks) {
+            if (t.getDescription().toLowerCase().contains(k)) {
+                result.addTask(t);
+            }
+        }
+        return result;
+    }
 }
