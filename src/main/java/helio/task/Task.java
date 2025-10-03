@@ -1,8 +1,8 @@
 package helio.task;
 
 public class Task {
-    protected String description;
-    protected boolean isDone;
+    private String description;
+    private boolean isDone;
 
     public Task(String description) {
         this.description = description;
@@ -19,6 +19,14 @@ public class Task {
 
     public void markAsNotDone() {
         isDone = false;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public boolean isDone() {
+        return isDone;
     }
 
     public String toSave() {
