@@ -8,9 +8,10 @@ import helio.parser.Parser;
 
 /**
  * Entry point of the Helio task manager application.
+ *
  * Helio is a simple CLI-based task manager that supports commands such as:
  * adding tasks (todo, deadline, event), listing tasks, marking/unmarking,
- * deleting, searching, and saving/loading tasks from disk.
+ * deleting, searching(by keyword or date), and saving/loading tasks from disk.
  */
 public class Helio {
     private final Storage storage;
