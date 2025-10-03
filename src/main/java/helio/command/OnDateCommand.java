@@ -27,7 +27,7 @@ public class OnDateCommand extends Command {
         try {
             LocalDate query = DateTimeUtil.parseDate(args);
             boolean any = false;
-            System.out.println("Tasks on " + DateTimeUtil.formatDate(query) + ":");
+            System.out.println(" Tasks on " + DateTimeUtil.formatDate(query) + ":");
             for (int i = 0; i < tasks.size(); i++) {
                 Task t = tasks.getTask(i);
                 if (t instanceof Deadline) {
@@ -46,7 +46,7 @@ public class OnDateCommand extends Command {
                 }
             }
             if (!any) {
-                System.out.println("Meowww you have nothing planned for this date! Time to snooze:>");
+                System.out.println(" Meowww you have nothing planned for this date! Time to snooze:>");
             }
         } catch (IllegalArgumentException ex) {
             ui.showError(ex.getMessage());
