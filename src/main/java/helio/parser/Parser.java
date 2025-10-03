@@ -28,6 +28,8 @@ public class Parser {
             return new AddEventCommand(args);
         case "delete":
             return new DeleteCommand(args);
+        case "on":
+            return new OnDateCommand(args);
         default:
             return new UnknownCommand(cmd);
         }

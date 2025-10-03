@@ -15,13 +15,17 @@ public class AddDeadlineCommand extends Command {
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) {
         String[] p = args.split("\\s*/by\\s*", 2);
-        if (p.length < 2 || p[0].isEmpty() || p[1].isEmpty()) {
-            ui.showError("Deadline must be: deadline <desc> /by <time>");
+        if (p.length < 2 || p[0].trim().isEmpty() || p[1].trim().isEmpty()) {
+            ui.showError("Deadline must be: deadline <desc> /by <yyyy-MM-dd>");
             return;
         }
-        Deadline t = new Deadline(p[0], p[1]);
-        tasks.addTask(t);
-        ui.showTaskAdded(t, tasks.size());
-        storage.save(tasks);
+        try {
+            Deadline t = new Deadline(p[0], p[1]); // parses LocalDate
+            tasks.addTask(t);
+            ui.showTaskAdded(t, tasks.size());
+            storage.save(tasks);
+        } catch (IllegalArgumentException ex) {
+            ui.showError(ex.getMessage());
+        }
     }
 }
