@@ -16,19 +16,22 @@ public class AddEventCommand extends Command {
     public void execute(TaskList tasks, Ui ui, Storage storage) {
         // Split once by /from, then by /to
         String[] first = args.split("\\s*/from\\s*", 2);
-        if (first.length < 2 || first[0].isEmpty()) {
-            ui.showError("Event must be: event <desc> /from <start> /to <end>");
+        if (first.length < 2 || first[0].trim().isEmpty()) {
+            ui.showError("Event must be: event <desc> /from <yyyy-MM-dd HHmm> /to <yyyy-MM-dd HHmm>");
             return;
         }
         String[] second = first[1].split("\\s*/to\\s*", 2);
-        if (second.length < 2 || second[0].isEmpty() || second[1].isEmpty()) {
-            ui.showError("Event must be: event <desc> /from <start> /to <end>");
+        if (second.length < 2 || second[0].trim().isEmpty() || second[1].trim().isEmpty()) {
+            ui.showError("Event must be: event <desc> /from <yyyy-MM-dd HHmm> /to <yyyy-MM-dd HHmm>");
             return;
         }
-
-        Event t = new Event(first[0], second[0], second[1]);
-        tasks.addTask(t);
-        ui.showTaskAdded(t, tasks.size());
-        storage.save(tasks);
+        try {
+            Event t = new Event(first[0], second[0], second[1]); // parses LocalDateTime
+            tasks.addTask(t);
+            ui.showTaskAdded(t, tasks.size());
+            storage.save(tasks);
+        } catch (IllegalArgumentException ex) {
+            ui.showError(ex.getMessage());
+        }
     }
 }

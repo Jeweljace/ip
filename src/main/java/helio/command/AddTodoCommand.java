@@ -18,9 +18,15 @@ public class AddTodoCommand extends Command {
             ui.showError("The description of a todo cannot be empty.");
             return;
         }
+        if (description.contains("|")) {
+            ui.showError("Description cannot contain '|'");
+            return;
+        }
         Todo t = new Todo(description);
         tasks.addTask(t);
         ui.showTaskAdded(t, tasks.size());
-        storage.save(tasks);
+        if (!storage.save(tasks)) {
+            ui.showError("Could not save tasks to disk.");
+        }
     }
 }
