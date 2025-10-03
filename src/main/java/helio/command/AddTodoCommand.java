@@ -5,6 +5,10 @@ import helio.storage.Storage;
 import helio.task.TaskList;
 import helio.task.Todo;
 
+/**
+ * Adds a {@code Todo} task to the task list.
+ * Usage: {@code todo <description>}
+ */
 public class AddTodoCommand extends Command {
     private final String description;
 

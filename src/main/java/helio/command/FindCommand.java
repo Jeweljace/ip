@@ -7,6 +7,10 @@ import helio.storage.Storage;
 import helio.task.Task;
 import helio.task.TaskList;
 
+/**
+ * Finds tasks whose descriptions contain the given keyword (case-insensitive).
+ * Usage: {@code find <keyword>}
+ */
 public class FindCommand extends Command {
     private final String keyword;
 

@@ -7,6 +7,10 @@ import helio.storage.Storage;
 import helio.task.*;
 import helio.time.DateTimeUtil;
 
+/**
+ * Lists all deadlines due on the given date and events that occur on that date.
+ * Usage: {@code on <yyyy-MM-dd>}
+ */
 public class OnDateCommand extends Command {
     private final String args;
 

@@ -5,6 +5,10 @@ import helio.storage.Storage;
 import helio.task.TaskList;
 import helio.task.Deadline;
 
+/**
+ * Adds a {@code Deadline} task with a description and due date/time.
+ * Usage: {@code deadline <description> /by <yyyy-MM-dd[ HHmm]>}
+ */
 public class AddDeadlineCommand extends Command {
     private final String args;
 

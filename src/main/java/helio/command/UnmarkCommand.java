@@ -5,6 +5,10 @@ import helio.storage.Storage;
 import helio.task.Task;
 import helio.task.TaskList;
 
+/**
+ * Marks the specified task as not done.
+ * Usage: {@code unmark <task number>}
+ */
 public class UnmarkCommand extends Command {
     private final String args;
 

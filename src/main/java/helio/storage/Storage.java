@@ -17,13 +17,32 @@ import helio.task.Event;
 import helio.task.TaskList;
 import helio.time.DateTimeUtil;
 
+/**
+ * Handles persistence of tasks to and from disk.
+ * Responsible for:
+ * Creating the data directory if it does not exist
+ * Loading tasks from a save file
+ * Saving tasks to the file after updates
+ */
 public class Storage {
     private final Path path;
 
+    /**
+     * Constructs a storage manager for the given directory and file name.
+     *
+     * @param dir      the directory containing the save file
+     * @param fileName the name of the save file
+     */
     public Storage(String dir, String fileName) {
         this.path = Paths.get(dir, fileName);
     }
 
+    /**
+     * Loads tasks from the save file into the given {@link TaskList}.
+     * If the file does not exist, nothing is loaded. Malformed lines are skipped.
+     *
+     * @param dest the task list to populate with loaded tasks
+     */
     public void load(TaskList dest) {
         try {
             if (path.getParent() != null) {
@@ -53,6 +72,11 @@ public class Storage {
         }
     }
 
+    /**
+     * Saves the given task list to the save file, overwriting any previous contents.
+     *
+     * @param src the task list to save
+     */
     public boolean save(TaskList src) {
         try {
             if (path.getParent() != null) {
@@ -70,6 +94,17 @@ public class Storage {
         }
     }
 
+    /**
+     * Parses a single line from the save file into a {@link Task}.
+     * Expected formats:
+     * Todo: {@code T | doneFlag | description}
+     * Deadline: {@code D | doneFlag | description | date/time | hasTimeFlag}
+     * Event: {@code E | doneFlag | description | from | to | hasTimeFrom | hasTimeTo}
+     *
+     * @param line a line from the save file
+     * @return the parsed task
+     * @throws IllegalArgumentException if the line is malformed or type is unknown
+     */
     private Task parse(String line) {
         String[] p = line.split("\\s*\\|\\s*");
         if (p.length < 3) {

@@ -5,6 +5,10 @@ import helio.storage.Storage;
 import helio.task.Task;
 import helio.task.TaskList;
 
+/**
+ * Marks the specified task as done.
+ * Usage: {@code mark <task number>}
+ */
 public class MarkCommand extends Command {
     private final String args;
 

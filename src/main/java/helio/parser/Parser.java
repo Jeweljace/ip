@@ -2,7 +2,19 @@ package helio.parser;
 
 import helio.command.*;
 
+/**
+ * Parses raw user input strings into executable {@link Command} objects.
+ * The parser reads the first word of input as the command word and passes
+ * the rest of the line as arguments. Unknown commands are wrapped in
+ * {@link UnknownCommand}.
+ */
 public class Parser {
+    /**
+     * Parses a raw user input string into a {@link Command}.
+     *
+     * @param input the full line entered by the user
+     * @return a {@link Command} representing the requested action
+     */
     public static Command parse(String input) {
         String trimmed = input.trim();
         String[] parts = trimmed.split("\\s+", 2);

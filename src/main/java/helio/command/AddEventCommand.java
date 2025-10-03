@@ -5,6 +5,10 @@ import helio.storage.Storage;
 import helio.task.TaskList;
 import helio.task.Event;
 
+/**
+ * Adds an {@code Event} task with a description, start, and end date/time.
+ * Usage: {@code event <description> /from <yyyy-MM-dd[ HHmm]> /to <yyyy-MM-dd[ HHmm]>}
+ */
 public class AddEventCommand extends Command {
     private final String args;
 

@@ -4,13 +4,30 @@ import java.time.LocalDateTime;
 
 import helio.time.DateTimeUtil;
 
+/**
+ * Represents an event with a start and end time, where each endpoint may optionally
+ * include a time component.
+ * Example usages:
+ * - event project meeting /from 2025-10-03 /to 2025-10-03
+ * - event camp /from 2025-12-24 0900 /to 2025-12-26 1700
+ */
 public class Event extends Task {
     private final LocalDateTime from;
     private final LocalDateTime to;
     private final boolean hasTimeFrom;
     private final boolean hasTimeTo;
 
-    // From user input (raw strings)
+    /**
+     * Constructs an event from raw user input.
+     * Accepted formats for {@code from} and {@code to}:
+     * - {@code yyyy-MM-dd}
+     * - {@code yyyy-MM-dd HHmm}
+     *
+     * @param description the task description
+     * @param fromRaw     the raw start date/time string
+     * @param toRaw       the raw end date/time string
+     * @throws IllegalArgumentException if parsing fails or if {@code to} is before {@code from}
+     */
     public Event(String description, String fromRaw, String toRaw) {
         super(description);
         this.from = DateTimeUtil.parseDateTimeFlexible(fromRaw);
@@ -22,7 +39,15 @@ public class Event extends Task {
         this.hasTimeTo = toRaw.trim().contains(" ");
     }
 
-    // From storage (already-parsed values + explicit flags).
+    /**
+     * Constructs an event from parsed values (used by {@code Storage}).
+     *
+     * @param description the task description
+     * @param from        the parsed start date/time
+     * @param to          the parsed end date/time
+     * @param hasTimeFrom whether the original input for {@code from} included a time
+     * @param hasTimeTo   whether the original input for {@code to} included a time
+     */
     public Event(String description, LocalDateTime from, LocalDateTime to,
                  boolean hasTimeFrom, boolean hasTimeTo) {
         super(description);
@@ -35,10 +60,20 @@ public class Event extends Task {
         this.hasTimeTo = hasTimeTo;
     }
 
+    /**
+     * Returns the start date/time of the event.
+     *
+     * @return the start {@code LocalDateTime}
+     */
     public LocalDateTime getFrom() {
         return from;
     }
 
+    /**
+     * Returns the end date/time of the event.
+     *
+     * @return the end {@code LocalDateTime}
+     */
     public LocalDateTime getTo() {
         return to;
     }

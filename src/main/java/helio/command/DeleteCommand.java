@@ -5,6 +5,10 @@ import helio.storage.Storage;
 import helio.task.Task;
 import helio.task.TaskList;
 
+/**
+ * Deletes the specified task from the list.
+ * Usage: {@code delete <task number>}
+ */
 public class DeleteCommand extends Command {
     private final String args;
 
