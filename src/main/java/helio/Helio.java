@@ -23,8 +23,12 @@ public class Helio {
         boolean isExit = false;
         while (!isExit) {
             String fullCommand = ui.readCommand();
-            if (fullCommand == null) break;
-            if (fullCommand.trim().isEmpty()) continue;
+            if (fullCommand == null) {
+                break;
+            }
+            if (fullCommand.trim().isEmpty()) {
+                continue;
+            }
 
             ui.showLine();
             Command c = Parser.parse(fullCommand);
