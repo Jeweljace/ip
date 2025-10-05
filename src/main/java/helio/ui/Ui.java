@@ -43,7 +43,7 @@ public class Ui {
      */
     public void showBye() {
         System.out.println(LINE);
-        System.out.println(" Bye bye! Time for my nap!! ");
+        System.out.println(" Bye bye! *Yawn* >.< Time for my nap!! ");
         System.out.println(LINE);
     }
 
